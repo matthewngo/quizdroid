@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         listView.setOnItemClickListener { _, _, position, _ ->
             // position = 0..2
-            val intent = Intent(this, MathOverviewActivity::class.java)
+            val intent = Intent(this, OverviewPageActivity::class.java)
             intent.putExtra("topic", position)
             startActivity(intent)
         }
