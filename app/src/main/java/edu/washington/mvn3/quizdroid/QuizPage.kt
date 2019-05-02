@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 
-class QuizPageActivity : Fragment() {
+class QuizPage : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         container!!.removeAllViews()
@@ -76,7 +76,7 @@ class QuizPageActivity : Fragment() {
             args.putInt("correctScore", numCorrect)
             args.putInt("totalScore", numTotal)
 
-            val fragment = AnswerPageActivity()
+            val fragment = AnswerPage()
             fragment.arguments = args
 
             val transaction = fragmentManager!!.beginTransaction()

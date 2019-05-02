@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 
-class OverviewPageActivity : Fragment() {
+class OverviewPage : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         container!!.removeAllViews()
@@ -73,7 +73,7 @@ class OverviewPageActivity : Fragment() {
             args.putInt("correctScore", 0)
             args.putInt("totalScore", 0)
 
-            val fragment = QuizPageActivity()
+            val fragment = QuizPage()
             fragment.arguments = args
 
             val transaction = fragmentManager!!.beginTransaction()

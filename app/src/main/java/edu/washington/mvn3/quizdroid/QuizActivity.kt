@@ -12,7 +12,7 @@ class QuizActivity : AppCompatActivity() {
         val args = Bundle()
         args.putInt("topic", intent.getIntExtra("topic", 0))
 
-        val fragment = OverviewPageActivity()
+        val fragment = OverviewPage()
         fragment.arguments = args
 
         val transaction = supportFragmentManager.beginTransaction()
