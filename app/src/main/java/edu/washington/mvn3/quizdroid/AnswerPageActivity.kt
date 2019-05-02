@@ -1,29 +1,36 @@
 package edu.washington.mvn3.quizdroid
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 
-class AnswerPageActivity : AppCompatActivity() {
+class AnswerPageActivity : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_answer_page)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        container!!.removeAllViews()
+        return inflater.inflate(R.layout.activity_answer_page, container, false)
+    }
 
-        val givenAns = findViewById<TextView>(R.id.givenAns)
-        val correctAns = findViewById<TextView>(R.id.correctAns)
-        val scoreText = findViewById<TextView>(R.id.scoreText)
-        val finishButton = findViewById<Button>(R.id.finishButton)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val questions = intent.getStringArrayExtra("questions")
-        val answers = intent.getStringArrayExtra("answers")
-        val options = intent.getStringArrayExtra("options")
-        val index = intent.getIntExtra("index", 0)
-        val given = intent.getIntExtra("given", 0)
-        val correctScore = intent.getIntExtra("correctScore", 0)
-        val totalScore = intent.getIntExtra("totalScore", 0)
+        val givenAns = getView()!!.findViewById<TextView>(R.id.givenAns)
+        val correctAns = getView()!!.findViewById<TextView>(R.id.correctAns)
+        val scoreText = getView()!!.findViewById<TextView>(R.id.scoreText)
+        val finishButton = getView()!!.findViewById<Button>(R.id.finishButton)
+
+        val questions = arguments!!.getStringArray("questions")
+        val answers = arguments!!.getStringArray("answers")
+        val options = arguments!!.getStringArray("options")
+        val index = arguments!!.getInt("index")
+        val given = arguments!!.getInt("given")
+        val correctScore = arguments!!.getInt("correctScore")
+        val totalScore = arguments!!.getInt("totalScore")
 
         givenAns.text = "Given Answer: " + options[4*index + given]
         correctAns.text = "Correct Answer: " + options[answers[index].toInt()]
@@ -31,23 +38,28 @@ class AnswerPageActivity : AppCompatActivity() {
         if (index + 1 < questions.size) {
             finishButton.text = "Next"
             finishButton.setOnClickListener {
-                val intent = Intent(this, QuizPageActivity::class.java)
-                intent.putExtra("questions", questions)
-                intent.putExtra("options", options)
-                intent.putExtra("answers", answers)
-                intent.putExtra("index", index+1)
-                intent.putExtra("correctScore", correctScore)
-                intent.putExtra("totalScore", totalScore)
-                startActivity(intent)
+                val args = Bundle()
+                args.putStringArray("questions", questions)
+                args.putStringArray("options", options)
+                args.putStringArray("answers", answers)
+                args.putInt("index", index+1)
+                args.putInt("correctScore", correctScore)
+                args.putInt("totalScore", totalScore)
+
+                val fragment = QuizPageActivity()
+                fragment.arguments = args
+
+                val transaction = fragmentManager!!.beginTransaction()
+                transaction.replace(R.id.frameLayout, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         } else {
             finishButton.text = "Finish"
             finishButton.setOnClickListener {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
             }
         }
-
-
     }
 }

@@ -1,16 +1,22 @@
 package edu.washington.mvn3.quizdroid
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 
-class OverviewPageActivity : AppCompatActivity() {
+class OverviewPageActivity : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_math_overview)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        container!!.removeAllViews()
+        return inflater.inflate(R.layout.activity_math_overview, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val names = arrayOf("Math", "Physics", "Marvel Super Heroes")
         val desc = arrayOf("Math", "Physics", "Marvel Super Heroes")
@@ -27,10 +33,10 @@ class OverviewPageActivity : AppCompatActivity() {
         val mhOptions = arrayOf("!","heh","nope","Iron Man")
         val mhAnswers = arrayOf("3")
 
+        val topic = arguments!!.getInt("topic")
+        val topicName = getView()!!.findViewById<TextView>(R.id.topicName)
+        val topicDesc = getView()!!.findViewById<TextView>(R.id.topicDescription)
 
-        val topic = intent.getIntExtra("topic", 0)
-        val topicName = findViewById<TextView>(R.id.topicName)
-        val topicDesc = findViewById<TextView>(R.id.topicDescription)
         var num = 1
         var questions = mQuestions
         var options = mOptions
@@ -58,15 +64,22 @@ class OverviewPageActivity : AppCompatActivity() {
         topicName.text = names[topic] + " Overview"
         topicDesc.text = "This quiz will test your knowledge of " + desc[topic] + " with " + num + " question(s)."
 
-        findViewById<Button>(R.id.beginTest).setOnClickListener {
-            val intent = Intent(this, QuizPageActivity::class.java)
-            intent.putExtra("questions", questions)
-            intent.putExtra("options", options)
-            intent.putExtra("answers", answers)
-            intent.putExtra("index", 0)
-            intent.putExtra("correctScore", 0)
-            intent.putExtra("totalScore", 0)
-            startActivity(intent)
+        getView()!!.findViewById<Button>(R.id.beginTest).setOnClickListener {
+            val args = Bundle()
+            args.putStringArray("questions", questions)
+            args.putStringArray("options", options)
+            args.putStringArray("answers", answers)
+            args.putInt("index", 0)
+            args.putInt("correctScore", 0)
+            args.putInt("totalScore", 0)
+
+            val fragment = QuizPageActivity()
+            fragment.arguments = args
+
+            val transaction = fragmentManager!!.beginTransaction()
+            transaction.replace(R.id.frameLayout, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
     }
