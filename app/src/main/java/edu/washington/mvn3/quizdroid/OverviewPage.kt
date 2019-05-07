@@ -18,51 +18,25 @@ class OverviewPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val names = arrayOf("Math", "Physics", "Marvel Super Heroes")
-        val desc = arrayOf("Math", "Physics", "Marvel Super Heroes")
-        val mQuestions = arrayOf("1+1", "1*1")
-        val mOptions = arrayOf("0","1","2","3","99","1","98","97")
-        // which option is correct from 0..3
-        val mAnswers = arrayOf("2", "1")
-
-        val pQuestions = arrayOf("What is one of Newton's Laws")
-        val pOptions = arrayOf("f = ma","1+1=2","1+2=5","science")
-        val pAnswers = arrayOf("0")
-
-        val mhQuestions = arrayOf("Which is a Marvel Super Hero")
-        val mhOptions = arrayOf("!","heh","nope","Iron Man")
-        val mhAnswers = arrayOf("3")
-
         val topic = arguments!!.getInt("topic")
         val topicName = getView()!!.findViewById<TextView>(R.id.topicName)
         val topicDesc = getView()!!.findViewById<TextView>(R.id.topicDescription)
 
-        var num = 1
-        var questions = mQuestions
-        var options = mOptions
-        var answers = mAnswers
-        if (topic == 0) {
-            // MATH OPTION
-            num = mQuestions.size
-            questions = mQuestions
-            options = mOptions
-            answers = mAnswers
-        } else if (topic == 1) {
-            // PHYSICS OPTION
-            num = pQuestions.size
-            questions = pQuestions
-            options = pOptions
-            answers = pAnswers
-        } else if (topic == 2) {
-            // HERO OPTION
-            num = mhQuestions.size
-            questions = mhQuestions
-            options = mhOptions
-            answers = mhAnswers
+        val qObjects = QuizApp.stateRepository.getTopic(topic).qObjects
+        val qTemp = ArrayList<String>()
+        val oTemp = ArrayList<String>()
+        val aTemp = ArrayList<String>()
+        for (obj in qObjects) {
+            qTemp.add(obj.question)
+            oTemp.addAll(obj.answers)
+            aTemp.add(obj.correct.toString())
         }
+        val questions = qTemp.toTypedArray()
+        val options = oTemp.toTypedArray()
+        val answers = aTemp.toTypedArray()
 
-        topicName.text = names[topic] + " Overview"
-        topicDesc.text = "This quiz will test your knowledge of " + desc[topic] + " with " + num + " question(s)."
+        topicName.text = QuizApp.stateRepository.getTopic(topic).title + " Overview"
+        topicDesc.text = QuizApp.stateRepository.getTopic(topic).longDesc
 
         getView()!!.findViewById<Button>(R.id.beginTest).setOnClickListener {
             val args = Bundle()
