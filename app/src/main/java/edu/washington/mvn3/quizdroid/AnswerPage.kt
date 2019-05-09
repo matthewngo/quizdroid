@@ -33,7 +33,7 @@ class AnswerPage : Fragment() {
         val totalScore = arguments!!.getInt("totalScore")
 
         givenAns.text = "Given Answer: " + options[4*index + given]
-        correctAns.text = "Correct Answer: " + options[answers[index].toInt()]
+        correctAns.text = "Correct Answer: " + options[4*index + answers[index].toInt()]
         scoreText.text = "You have " + correctScore + " out of " + totalScore + " correct."
         if (index + 1 < questions.size) {
             finishButton.text = "Next"

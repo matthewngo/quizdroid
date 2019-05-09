@@ -46,7 +46,7 @@ class StateRepository : TopicRepositoryInterface {
 
     // Online repository
     fun initRepositoryJSON() {
-        val jsonFile = File(Environment.getExternalStorageDirectory(), "questions.json")
+        val jsonFile = File(Environment.getExternalStorageDirectory(), "custom.json")
         System.out.println(jsonFile.exists())
         val json = JSONArray(jsonFile.readText())
         for (i in 0..json.length()-1) {

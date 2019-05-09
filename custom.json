@@ -1,0 +1,67 @@
+[
+    { "title":"Computer Science!",
+      "desc":"Because CoMpUtEr SCIENCE!",
+      "questions":[
+        {
+          "text":"Which runtime is the fastest?",
+          "answer":"1",
+          "answers":[
+            "O(n)",
+            "O(n^2)",
+            "O(n^3)",
+            "O(nlog(n))"
+          ]
+        }
+      ]
+    },
+    { "title":"Foooood",
+      "desc":"Because yummmyyy",
+      "questions":[
+        {
+          "text":"What meat comes from pig?",
+          "answer":"1",
+          "answers":[
+            "bacon",
+            "steak",
+            "chicken wings",
+            "carrots"
+          ]
+        },
+        {
+          "text":"Which one is soup?",
+          "answer":"2",
+          "answers":[
+            "rice",
+            "minestrone",
+            "milk",
+            "carrots"
+          ]
+        },
+        {
+          "text":"Which one is not a vegetable",
+          "answer":"1",
+          "answers":[
+            "tomato",
+            "celery",
+            "carrot",
+            "spinach"
+          ]
+        }
+      ]
+    },
+    { "title":"Math",
+      "desc":"Are you a math god?",
+      "questions":[
+         {
+           "text":"What is 100-100?",
+           "answer":"1",
+           "answers":[
+             "0",
+             "11",
+             "infinity",
+             "nope"
+           ]
+         }
+      ]
+   }
+]
