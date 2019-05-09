@@ -7,26 +7,27 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <TextView
-            android:layout_width="102dp"
-            android:layout_height="40dp"
-            android:inputType="textPersonName"
-            android:text="@string/quizdroid"
-            android:ems="10"
-            android:id="@+id/Title" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="24dp" android:layout_marginRight="24dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="24dp"
-            android:layout_marginStart="24dp" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toTopOf="parent" android:importantForAutofill="no"/>
     <ListView
             android:layout_width="wrap_content"
-            android:layout_height="0dp" android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/Title"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp" android:id="@+id/topicList"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="32dp">
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="32dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/pref_toolbar">
     </ListView>
+    <android.support.v7.widget.Toolbar
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"
+            android:minHeight="?attr/actionBarSize"
+            android:id="@+id/pref_toolbar"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/topicList" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="32dp" android:layout_marginStart="32dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"/>
 
 </android.support.constraint.ConstraintLayout>
