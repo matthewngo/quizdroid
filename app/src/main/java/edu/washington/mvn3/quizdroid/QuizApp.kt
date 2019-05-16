@@ -1,6 +1,11 @@
 package edu.washington.mvn3.quizdroid
 
 import android.app.Application
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import org.json.JSONArray
@@ -14,7 +19,7 @@ interface TopicRepositoryInterface {
 }
 
 class StateRepository : TopicRepositoryInterface {
-    private val repo = arrayListOf<TopicObject>()
+    private var repo = arrayListOf<TopicObject>()
 
     override fun getTopic(index: Int): TopicObject {
         return repo[index]
@@ -46,8 +51,14 @@ class StateRepository : TopicRepositoryInterface {
 
     // Online repository
     fun initRepositoryJSON() {
-        val jsonFile = File(Environment.getExternalStorageDirectory(), "custom.json")
-        System.out.println(jsonFile.exists())
+        val temp = arrayListOf<TopicObject>()
+        var jsonFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/questions.json")
+        for (i in Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).listFiles()) {
+            System.out.println("ITEM: " + i.name)
+        }
+        if (!jsonFile.exists()) {
+            jsonFile = File(Environment.getExternalStorageDirectory(), "custom.json")
+        }
         val json = JSONArray(jsonFile.readText())
         for (i in 0..json.length()-1) {
             val topic = json.getJSONObject(i)
@@ -66,8 +77,9 @@ class StateRepository : TopicRepositoryInterface {
                 }
                 repoQuestions.add(QuizObject(text, repoAnswers.toTypedArray(), correct))
             }
-            repo.add(TopicObject(title, desc, desc, repoQuestions.toTypedArray()))
+            temp.add(TopicObject(title, desc, desc, repoQuestions.toTypedArray()))
         }
+        repo = temp
     }
 }
 
@@ -81,12 +93,15 @@ class QuizApp : Application() {
     // singleton object
     companion object {
         val stateRepository = StateRepository()
+
+        fun resetRepo() {
+            stateRepository.initRepositoryJSON()
+        }
         init {
             //stateRepository.initRepository()
             stateRepository.initRepositoryJSON()
         }
     }
-
 }
 
 data class QuizObject(val question: String, val answers: Array<String>, val correct: Int)

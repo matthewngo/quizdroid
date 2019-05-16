@@ -11,14 +11,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Quesiton Data URL"
             android:ems="10"
             android:id="@+id/urlTextBox" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="32dp" android:layout_marginBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="32dp" android:layout_marginRight="32dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="32dp"
-            android:layout_marginStart="32dp" app:layout_constraintBottom_toTopOf="@+id/textView"/>
+            android:layout_marginStart="32dp" app:layout_constraintBottom_toTopOf="@+id/textView"
+            android:hint="Quesiton Data URL"/>
     <Spinner
             android:layout_width="395dp"
             android:layout_height="wrap_content"
