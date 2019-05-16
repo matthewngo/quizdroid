@@ -34,27 +34,19 @@ class PreferenceActivity : AppCompatActivity() {
         val urlText = findViewById<TextView>(R.id.urlTextBox)
         val updateButton = findViewById<Button>(R.id.updateButton)
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val count = intent.getIntExtra("count", 0)
         val intent = Intent(this, AlarmReceiver::class.java)
-        var pressed = false
 
         updateButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 System.out.println("GETTING PERMISSSION")
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
             } else {
-                if (count == 1) {
-                    val cancelIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-                    alarmManager.cancel(cancelIntent)
-                    println("CANCELED!!")
-                }
                 intent.putExtra("url", urlText.text.toString())
                 val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
                 val interval = spinner.selectedItem.toString().toLong() * 60000
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, alarmIntent)
                 Toast.makeText(this, "Will Download From " + urlText.text.toString(), Toast.LENGTH_SHORT).show()
                 val nextIntent = Intent(this, MainActivity::class.java)
-                nextIntent.putExtra("count", 1)
                 startActivity(nextIntent)
             }
         }

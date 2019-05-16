@@ -55,9 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val count = intent.getIntExtra("count", 0)
         val intent = Intent(this, PreferenceActivity::class.java)
-        intent.putExtra("count", count)
         startActivity(intent)
         return true
     }
